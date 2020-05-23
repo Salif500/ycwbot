@@ -6,22 +6,18 @@ total = 0
 class Check_In(commands.Cog):
 
     def __init__(self, client):
-        """:this is the init function for the class"""
+        """this is the init function for the class"""
         self.client = client
     
     @commands.command(aliases=["check", "Admin", "c", "checkin"])
-    @commands.has_role("Student")
     async def check_in(self, ctx):
-        """:this function checks in the user, while adding information to the database"""
+        """this function checks in the user, while adding information to the database"""
         global total
         user = ctx.author
         list1 = str(user).split("#")
         name = list1[0]
-        print(name)
         for role in user.roles:
-            print(role)
             if(str(role) == "Python G1"):
-                print("It works!")
                 await ctx.send("Hello {}. Please Go To Advanced Group".format(name))
             elif(str(role) == "Python G2"):
                 await ctx.send("Hello {}. Please Go To Intermediate Group".format(name))
@@ -36,19 +32,20 @@ class Check_In(commands.Cog):
 
     @commands.command(aliases=["clear_cache", "final"])
     @commands.has_any_role("Admin", "Moderator")
-    async def clear_members(self, ctx, *, date):
-        global total
+    async def clear_members(self, ctx):
         """:This function adds the total members joined to the database and clears the current variable"""
-        if(date == ""):
-            await ctx.send("You didnt enter a date")
-        elif(date != ""):
-            with open("total.txt", "a") as file_object:
-                file_object.write("{}: {} members joined\n".format(date, total))
-            total = 0
-            await ctx.send("Data sent to Database")
+        global total
+        date = str(ctx.message.created_at).split(" ")
+        print(ctx.message.created_at)
+        print(date)
+        print(date[0])
+        with open("total.txt", "a") as file_object:
+            file_object.write("{}: {} members joined\n".format(date[0], total))
+        total = 0
+        await ctx.send("Data sent to Database")
 
     @commands.command(aliases=["find_data", "info"])
-    @commands.has_any_role("Admin", "Moderator")
+    @commands.has_any_role("Admin", "Moderator", "Tutor")
     #This checks if the user has the permission of Administrator
     async def data(self, ctx):
         global total
