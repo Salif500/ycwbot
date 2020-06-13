@@ -19,7 +19,7 @@ with open("assignments.txt") as file_object:
 total = 0
 
 class Submission(commands.Cog):
-
+    """Its all commands relating to submissions. Submit your asssignment using .submit"""
     def __init__(self, client):
         self.client = client
 
@@ -53,12 +53,14 @@ class Submission(commands.Cog):
     @commands.command(aliases=["append_list", "add_list", "add_a"])
     @commands.has_any_role("Admin", "Moderator")
     async def add_to_assignments(self, ctx, *, assignment):
+        """This function allows you to add an assignment to the list. Admins Only"""
         update_list(assignment)
         await ctx.send("{} has been sent".format(assignment))
 
     @commands.command(aliases=["show_submissions", "s"])
     @commands.has_any_role("Admin", "Moderator", "Tutor")
     async def show_sub(self, ctx):
+        """This function allows you to show all submissions from students. Admins and Tutors only."""
         with open("submissions.txt") as file_object:
             lines = file_object.readlines()
             for line in lines:
@@ -66,10 +68,7 @@ class Submission(commands.Cog):
                     await ctx.send(line)
                 except:
                     print("Empty message")
-                
-    
-                    
-    
-                    
+
 def setup(client):
     client.add_cog(Submission(client))
+

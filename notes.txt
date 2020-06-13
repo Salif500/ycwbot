@@ -2,7 +2,7 @@ You should add that if admins do it say ur not a student
 
 keep a list of members
 
-keep a list of the submissiosn of all members
+keep a list of the submissions of all members
 
 delete a thing from a list
 
