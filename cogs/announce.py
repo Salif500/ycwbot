@@ -1,7 +1,9 @@
 import discord
 from discord.ext import commands
 
-class Announcement(commands.Cog):
+pins_guild = {}
+
+class Announce(commands.Cog):
     """Its basically announcing text in a much cleaner way or just announcing text."""
 
     def __init__(self, client):
@@ -18,7 +20,7 @@ class Announcement(commands.Cog):
     @commands.command(aliases=["ea", "assign"])
     @commands.has_any_role("Admin", "Moderator")
     async def embed_assign(self, ctx, channel, due, group,*, message):
-        """Assign a thing at the end of the week as an embed by doing, .embed_assign <channel> <due date> <group> <message>"""
+        """Assign a thing at the end of the week as an embed"""
         
         if(channel == "assignments"):
             channel = 691079262475780157
@@ -51,23 +53,46 @@ class Announcement(commands.Cog):
         if(group.lower() == "python"):
             for i in range(1, 4):
                 embed1.add_field(name = "Homework for Python G{}".format(i), value=messages[i-1], inline=False)
-                for guild in self.client.guilds:
-                    for role in guild.roles:
-                        if(str(role) == "Python G{}".format(i)):
-                            await ctx.send("{}".format(role.mention))
         elif(group.lower() == "html"):
             for i in range(1,3):
                 embed1.add_field(name = "Homework for HTML G{}".format(i), value=messages[i-1], inline=False)
-                for guild in self.client.guilds:
-                    for role in guild.roles:
-                        if(str(role) == "HTML G{}".format(i)):
-                            await ctx.send("{}".format(role.mention))
         embed1.add_field(name = "Due Date", value=due, inline=False)
         channel = self.client.get_channel(channel)     
         await channel.send('',embed=embed1)
 
+    @commands.command()
+    @commands.has_any_role("Admin", "Moderator")
+    async def ping_students(self,ctx):
+        channel = self.client.get_channel(691079262475780157)
+        for guild in self.client.guilds:
+            for role in guild.roles:
+                if(str(role) == "Student"):
+                    await channel.send("{}".format(role.mention))
+
+    @commands.command(aliases=["all_pins", "pins"])
+    async def find_pins(self, ctx):
+        """Finds all pins of all channels in YCW"""
+        user = ctx.message.author
+        embed1 = discord.Embed(title="All pins in YCW channels", desc="This is all the pins of all YCW channels for students", color=discord.Color.from_rgb(195, 229, 231))
+        for guild in self.client.guilds:
+            for channel in guild.text_channels:
+                if(guild.roles[0].permissions.read_messages == True):
+                    pins = await channel.pins()
+                    for i in range(1, len(pins)+1):
+                        pin = pins[i-1]
+                        pins[i-1] = pin.content
+                    pins_guild[channel.name] = pins
+            print(pins_guild)
+            for key, value in pins_guild.items():
+                embed1.add_field(name = "{}".format(key), value = "{}".format(str('\n'.join(value))),inline=False)
+        await user.send('', embed=embed1)
+                
+                
+                    
+        
+
 
 def setup(client):
-    client.add_cog(Announcement(client))
+    client.add_cog(Announce(client))
         
         

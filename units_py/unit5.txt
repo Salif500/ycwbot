@@ -1,0 +1,4 @@
+Manipulating Lists : https://youtu.be/H2IPIrxzyJQ
+List Slicing and Dictionaries : https://youtu.be/Vbj-n_wenlY
+Username/Password Generator : https://youtu.be/YL7B8R-KAzo
+TAG #2: Creating Random Events : https://youtu.be/kWTJ_aXktGg

@@ -1,0 +1,5 @@
+Intro to Repl :  https://youtu.be/wJtJ-mWwjgg
+Basics of Python : https://youtu.be/fXz0ksSH6iE
+Conditionals in Python : https://youtu.be/vfxICiHl15U
+Working with User Input : https://youtu.be/UpPBpInvPVc
+Buzzfeed Quiz : https://youtu.be/oPiF7LhURe8

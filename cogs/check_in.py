@@ -3,7 +3,7 @@ from discord.ext import commands
 import json
 
 total = 0
-class checkin(commands.Cog):
+class Checkin(commands.Cog):
     """This is the check in category for commands that are related to the beginning of the workshop"""
 
     def __init__(self, client):
@@ -48,7 +48,6 @@ class checkin(commands.Cog):
         year = date_list2[0]
         day = date_list2[2]
         self.month = date_list2[1]
-        print(day[-1])
         if(day[-1] == 1):
             day_suffix = "st"
         elif(day[-1] == 2):
@@ -78,7 +77,7 @@ class checkin(commands.Cog):
                     print("Empty message")
                 
 def setup(client):
-    client.add_cog(checkin(client))
+    client.add_cog(Checkin(client))
                 
                                
     

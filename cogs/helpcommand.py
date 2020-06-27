@@ -3,6 +3,7 @@ However, you must put "bot.remove_command('help')" in your bot, and the command 
 Written by Jared Newsom (AKA Jared M.F.)!"""
 import discord
 from discord.ext import commands
+import inspect
 
 
 class Help(commands.Cog):
@@ -29,7 +30,19 @@ class Help(commands.Cog):
             cmds_desc = ''
             for y in self.client.walk_commands():
                 if not y.cog_name and not y.hidden:
-                    cmds_desc += ('{} - {}'.format(y.name,y.help)+'\n\n')
+                    brackets_left = " <"
+                    brackets_right = ">"
+                    command = self.client.get_command(str(y))
+                    command_aliases = command.aliases
+                    command_params_dict = command.clean_params
+                    command_params = list(command_params_dict)
+                    if not command_params:
+                        command_params = ["None"]
+                        brackets_left = " "
+                        brackets_right = ""
+                    if not command_aliases:
+                       command_aliases = ["None"]                         
+                    cmds_desc += ('{} - {}'.format(y.name,y.help)+'\nParameters:{}{}{}\nAliases: {}\n\n'.format(brackets_left, ('> <'.join(command_params)),brackets_right,(', '.join(command_aliases))))
             halp.add_field(name='Miscellaneous',value=cmds_desc[0:len(cmds_desc)-1],inline=False)
             await ctx.message.author.send('',embed=halp)
         else:
@@ -40,13 +53,26 @@ class Help(commands.Cog):
             else:
                 """Command listing within a cog."""
                 found = False
+                cog = (cog[0].capitalize(),)
                 for x in self.client.cogs:
                     for y in cog:
                         if x == y:
                             halp=discord.Embed(title=cog[0]+' Commands',description=self.client.cogs[cog[0]].__doc__, color=discord.Color.blue())
                             for c in self.client.get_cog(y).get_commands():
                                 if not c.hidden:
-                                    halp.add_field(name=c.name,value=c.help,inline=False)
+                                    brackets_left = " <"
+                                    brackets_right = ">"
+                                    cog_command = self.client.get_command(str(c))
+                                    cog_command_aliases = cog_command.aliases
+                                    cog_command_params_dict = cog_command.clean_params
+                                    cog_command_params = list(cog_command_params_dict)
+                                    if not cog_command_params:
+                                        cog_command_params = ["None"]
+                                        brackets_left = " "
+                                        brackets_right = ""
+                                    if not cog_command_aliases:
+                                        cog_command_aliases = ["None"]
+                                    halp.add_field(name=c.name,value=str(c.help) + "\nParameters:{}{}{}\nAliases: {}".format(brackets_left, ('> <'.join(cog_command_params)),brackets_right,(', '.join(cog_command_aliases))),inline=False)
                             found = True
                 if not found:
                     """Reminds you if that cog doesn't exist."""

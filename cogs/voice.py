@@ -17,12 +17,14 @@ class Voice(commands.Cog):
                     try:
                         await member.move_to(channel)
                     except:
-                        print("{} is not connected\n".format(member))
+                        pass
 
     @commands.command()
     @commands.has_any_role("Admin", "Moderator")
     async def move_students(self, ctx):
         """Moves all students to designated voice channel"""
+        await self.client.wait_until_ready()
+        moved = False
         for guild in self.client.guilds:
             for member in guild.members:
                 if(member.status != discord.Status.offline):
@@ -30,17 +32,24 @@ class Voice(commands.Cog):
                         for role in member.roles:
                             if(str(role) == "Python G1"):
                                 channel = discord.utils.get(guild.voice_channels, name='advanced')
+                                moved = True
                             elif(str(role) == "Python G2"):
                                 channel = discord.utils.get(guild.voice_channels, name='intermediate')
+                                moved = True
                             elif(str(role) == "Python G3"):
                                 channel = discord.utils.get(guild.voice_channels, name='beginning')
+                                moved = True
                             elif(str(role) == "HTML G2"):
                                 channel = discord.utils.get(guild.voice_channels, name='beginning')
+                                moved = True
                             elif(str(role) == "HTML G1"):
                                 channel = discord.utils.get(guild.voice_channels, name='intermediate')
+                                moved = True
+                            if(moved == False):
+                                channel = discord.utils.get(guild.voice_channels, name='living-room')
                         await member.move_to(channel)
                     except:
-                        print("{} is not connected\n".format(member))
+                        pass
 
     @commands.command()
     @commands.has_any_role("Admin", "Moderator")
@@ -52,7 +61,7 @@ class Voice(commands.Cog):
                     try:
                         await member.move_to(channel=None)
                     except:
-                        print("{} is not connected\n".format(member))
+                        pass
             
 
 
