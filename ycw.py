@@ -1,28 +1,19 @@
 import discord
-from discord.abc import PrivateChannel
 from discord.ext import commands
 import os
-import time
-import datetime
+import logging
+
+
+
 
 client = commands.Bot(command_prefix = ".")
 client.remove_command("help")
 
-month = 0
-
-all_embed_settings = {}
-
-def update_link_dict():
-    with open("settings/embed_links.txt") as f:
-        lines = f.readlines()
-        for line in lines:
-            line_split = line.split(" : ")
-            key = line_split[0]
-            value = line_split[1]
-            all_embed_settings[key] = value
-
-update_link_dict()
-        
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
 
         
 @client.command()
@@ -40,38 +31,30 @@ async def unload(ctx, extension):
     await ctx.send("Cog has been unloaded!")
 
 @client.command()
-async def emoji(ctx, emoji = None):
-    """This command sends many emojis"""
-    global pos
-    if(emoji == None):
-        await ctx.send("\ \_ :grinning: _/\n        |\n       /\\")
-    elif(emoji == "1"):
-        await ctx.send("Nothing here yet")
+async def add_suggestion(ctx, *, suggestion):
+    """This command adds your suggestion to a list. I will look at the list and will try to add it if reasonable."""
+    with open("suggestions.txt", "a") as f:
+        f.write("{} | {}\n".format(ctx.author.display_name, suggestion))
+    user = client.get_user(308027015863336960)
+    await user.send('Someone has added a suggestion')
+
+@client.command()
+@commands.has_any_role("Admin", "Moderator")
+async def check_logs(ctx):
+    with open('discord.log', 'rb') as fp:
+        await ctx.send('File:', file=discord.File(fp, 'discord_log.log'))
+
+
+
 
         
 
-    else:
-        await ctx.send("No such number of this emoji")
-
-@client.command()
-async def embed_settings(ctx, setting):
-    """Set a setting for if you automattically want to turn links into embeds"""
-    if(setting.capitalize() == "True" or "False"):
-        user_id = ctx.author.id
-        with open("settings/embed_links.txt", "w") as f:
-            f.write("{} : {}".format(user_id, str(setting)))
-        update_link_dict()
-        await ctx.send("Setting has been set to {}".format(setting))
-    
-            
-
-
-
-    
     
 
 
 
+
+        
 
 for filename in os.listdir("./cogs"):
     if(filename.endswith(".py")):

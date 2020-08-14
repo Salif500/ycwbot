@@ -30,20 +30,14 @@ class Voice(commands.Cog):
                 if(member.status != discord.Status.offline):
                     try:
                         for role in member.roles:
-                            if(str(role) == "Python G1"):
-                                channel = discord.utils.get(guild.voice_channels, name='advanced')
+                            if(str(role) == "Python"):
+                                channel = discord.utils.get(guild.voice_channels, name='python')
                                 moved = True
-                            elif(str(role) == "Python G2"):
-                                channel = discord.utils.get(guild.voice_channels, name='intermediate')
+                            elif(str(role) == "Scratch"):
+                                channel = discord.utils.get(guild.voice_channels, name='scratch')
                                 moved = True
-                            elif(str(role) == "Python G3"):
-                                channel = discord.utils.get(guild.voice_channels, name='beginning')
-                                moved = True
-                            elif(str(role) == "HTML G2"):
-                                channel = discord.utils.get(guild.voice_channels, name='beginning')
-                                moved = True
-                            elif(str(role) == "HTML G1"):
-                                channel = discord.utils.get(guild.voice_channels, name='intermediate')
+                            elif(str(role) == "HTML"):
+                                channel = discord.utils.get(guild.voice_channels, name='html')
                                 moved = True
                             if(moved == False):
                                 channel = discord.utils.get(guild.voice_channels, name='living-room')

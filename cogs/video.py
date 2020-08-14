@@ -67,6 +67,7 @@ class Video(commands.Cog):
             await ctx.send("Sorry that group isn't there.")
 
     @commands.command()
+    @commands.has_any_role("Admin", "Moderator")
     async def add_vid(self, ctx, group, unit_num, link, *, video):
         """This command is to add a video to a unit, or create a unit if its non existing. Parameters: <group> <unit_num> <link> <video>"""
         global existing
