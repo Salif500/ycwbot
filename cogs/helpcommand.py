@@ -17,16 +17,17 @@ class Help(commands.Cog):
     @commands.command(pass_context=True)
     async def help(self,ctx,*cog):
         """Its literally this command."""
-        if not cog:
-            await ctx.send("You've been sent the help command!")
+        if not cog: 
             """Cog listing.  What more?"""
             halp=discord.Embed(title='All Commands in this Bot',
                                description='Use `.help *category*` to find out more about them!',
                                color=discord.Color.gold())
             cogs_desc = ''
             for x in self.client.cogs:
-                cogs_desc += ('{} - {}'.format(x,self.client.cogs[x].__doc__)+'\n\n')
-            halp.add_field(name='Categories',value=cogs_desc[0:len(cogs_desc)-1],inline=False)
+                cogs_desc += ('**{}** - {}'.format(x,self.client.cogs[x].__doc__)+'\n')
+            halp.add_field(name='__Categories:__',value=cogs_desc[0:len(cogs_desc)-1],inline=False)
+            #Not In Use
+            """
             cmds_desc = ''
             for y in self.client.walk_commands():
                 if not y.cog_name and not y.hidden:
@@ -43,8 +44,9 @@ class Help(commands.Cog):
                     if not command_aliases:
                        command_aliases = ["None"]                         
                     cmds_desc += ('{} - {}'.format(y.name,y.help)+'\nParameters:{}{}{}\nAliases: {}\n\n'.format(brackets_left, ('> <'.join(command_params)),brackets_right,(', '.join(command_aliases))))
-            halp.add_field(name='Miscellaneous',value=cmds_desc[0:len(cmds_desc)-1],inline=False)
+            halp.add_field(name='Miscellaneous',value=cmds_desc[0:len(cmds_desc)-1],inline=False)"""
             await ctx.message.author.send('',embed=halp)
+            
         else:
             """Helps me remind you if you pass too many args."""
             if len(cog) > 1:

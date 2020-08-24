@@ -1,9 +1,10 @@
 import discord
 from discord.ext import commands
+from discord.utils import get
 import time
 
 class Events(commands.Cog):
-    """This category is only for events. No commands are in this category. Some features of the category are that if you do \"question: your question\", it will give your question to all tutors. If you defean, you will automagically be put to the defeaned channel, and if you undefean you get moved back. """
+    """This category is only for events. No commands are in this category."""
 
     def __init__(self, client):
         self.client = client
@@ -147,26 +148,30 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self,member):
-        if(member.id != 308027015863336960):
-            registered = False
-            channel = self.client.get_channel(648705311963611147)
-            await member.send('Welcome to YCW! You have just received the student role for joining the server! GLHF! Please look at this document for our online workshop procedures: https://docs.google.com/document/d/1BnzQFY0t5ezTR8af6WL-kB44q6k4CLHh8_rbLCLCH3A/edit')
-            await channel.send("Hello {}, welcome to YCW! How did you hear about us? If you want a tour of our discord server, please watch https://youtu.be/v1M0Ruj_ghE. Feel free to explore our discord server and also check out https://ycwalameda.weebly.com".format(member.mention))
+        registered = False
+        channel = self.client.get_channel(746863674324680815)
+        await member.send('Welcome to YCW! You have just received the student role for joining the server! GLHF! Please look at this document for our online workshop procedures: https://docs.google.com/document/d/1BnzQFY0t5ezTR8af6WL-kB44q6k4CLHh8_rbLCLCH3A/edit')
+        await channel.send("Hello {}, welcome to YCW! How did you hear about us? If you want a tour of our discord server, please watch https://youtu.be/v1M0Ruj_ghE. Feel free to explore our discord server and also check out https://ycwalameda.weebly.com".format(member.mention))
+        if(member.id == 308027015863336960):
             try:
-                for role in self.client.guilds[0].roles:
-                    if(str(role) == "Student"):
-                        await member.add_roles(role)
+                role = discord.utils.get(member.guild.roles, name='Waiting')
+                await member.add_roles(role)
             except:
-                print('add_role error')
-            with open('cf/cfscores.txt') as f:
-                lines = f.readlines()
-            for line in lines:
-                liner = line.split(' | ')
-                if(int(liner[1]) == member.id):
-                    registered = True
-            if(registered == False):
-                with open('cf/cfscores.txt', 'a') as f:
-                    f.write('{} | {} | 0 | 0 | \n'.format(member.display_name, member.id))
+                print('addrole error')
+        else:
+            print('else')
+            role = discord.utils.get(member.guild.roles, name='Waiting')
+            await member.add_roles(role)      
+        with open('cf/cfscores.txt') as f:
+            lines = f.readlines()
+        for line in lines:
+            liner = line.split(' | ')
+            if(int(liner[1]) == member.id):
+                registered = True
+        if(registered == False):
+            with open('cf/cfscores.txt', 'a') as f:
+                f.write('{} | {} | 0 | 0 | \n'.format(member.display_name, member.id))
+
 
         
             
