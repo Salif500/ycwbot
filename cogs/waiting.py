@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 
 class Waiting(commands.Cog):
-    """This category is for people who are in the waiting list"""
+    """Commands for handling Waiting Room(ADMIN ONLY)"""
 
     def __init__(self, client):
         self.client = client
@@ -10,7 +10,7 @@ class Waiting(commands.Cog):
     @commands.command(pass_context=True)
     @commands.has_any_role("Admin", "Moderator")
     async def accept_all(self, ctx):
-        """This command accepts all the people in the waiting list and turn them into students"""
+        """Accepts ALL members in waiting room(ADMINS ONLY)"""
         for role in self.client.guilds[0].roles:
             if(role.name.upper() == "WAITING"):
                 roles = role.members
@@ -24,7 +24,7 @@ class Waiting(commands.Cog):
     @commands.command(pass_context=True)
     @commands.has_any_role("Admin", "Moderator")
     async def accept(self, ctx, member: discord.Member):
-        """This command accepts the certain person mentioned"""
+        """Accepts a CERTAIN member in waiting room(ADMINS ONLY)"""
         student = self.client.guilds[0].get_role(665958098627985450)
         waiting = self.client.guilds[0].get_role(746862974295343216)
         await member.remove_roles(waiting)

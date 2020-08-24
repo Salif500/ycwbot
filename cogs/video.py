@@ -6,7 +6,7 @@ units_py = {}
 units_html = {}
     
 class Video(commands.Cog):
-    """This is the Video category for accessing any videos that you want through discord."""
+    """Allows you to access any lessons using Discord interface"""
 
     def __init__(self, client):
         self.client = client
@@ -41,7 +41,7 @@ class Video(commands.Cog):
             
     @commands.command(aliases=["get_all_vids", "list_vid", "all_videos"])
     async def all_vids(self, ctx, group, unit_num):
-        """Get all the videos of the given group"""
+        """Allows navigation through our curriculum by programming language & unit"""
         user = ctx.author
         self.update_files_py()
         self.update_files_html()
@@ -69,7 +69,7 @@ class Video(commands.Cog):
     @commands.command()
     @commands.has_any_role("Admin", "Moderator")
     async def add_vid(self, ctx, group, unit_num, link, *, video):
-        """This command is to add a video to a unit, or create a unit if its non existing. Parameters: <group> <unit_num> <link> <video>"""
+        """Add a video to a unit, or create a unit if unit listed doesn't exist(ADMINS ONLY)"""
         global existing
         existing = False
         if(group.lower() == "python"):

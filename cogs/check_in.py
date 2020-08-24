@@ -4,7 +4,7 @@ from discord.ext import commands
 
 total = 0
 class Checkin(commands.Cog):
-    """This is the check in category for commands that are related to the beginning of the workshop"""
+    """Commands to use at the beginning of a workshop"""
 
     def __init__(self, client):
         """this is the init function for the class"""
@@ -13,7 +13,7 @@ class Checkin(commands.Cog):
     
     @commands.command(aliases=["check", "Admin", "c", "check_in"])
     async def checkin(self, ctx):
-        """this function checks in the user, while adding information to the database"""
+        """Use this in the #checkin channel before every workshop"""
         found, found_role = False, False
         name = ctx.author.display_name
         user = ctx.author
@@ -64,7 +64,7 @@ class Checkin(commands.Cog):
     @commands.has_any_role("Admin", "Moderator", "Tutor")
     #This checks if the user has the permission of Administrator
     async def data(self, ctx):
-        """this tells the user the members joined each week. Admins and Tutors Only"""
+        """Prints all checkin data(ADMINS ONLY)"""
         global total
         with open("total.txt") as file_object:
             lines = file_object.readlines()

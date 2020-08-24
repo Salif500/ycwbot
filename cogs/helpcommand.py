@@ -7,7 +7,7 @@ import inspect
 
 
 class Help(commands.Cog):
-    """Its just literally this category of help"""
+    """Pretty self-explanatory"""
     def __init__(self,client):
         self.client = client
 
@@ -16,7 +16,7 @@ class Help(commands.Cog):
 
     @commands.command(pass_context=True)
     async def help(self,ctx,*cog):
-        """Its literally this command."""
+        """Prints help message"""
         if not cog: 
             """Cog listing.  What more?"""
             halp=discord.Embed(title='All Commands in this Bot',
@@ -24,6 +24,8 @@ class Help(commands.Cog):
                                color=discord.Color.gold())
             cogs_desc = ''
             for x in self.client.cogs:
+                if(x == "Events"):
+                    continue
                 cogs_desc += ('**{}** - {}'.format(x,self.client.cogs[x].__doc__)+'\n')
             halp.add_field(name='__Categories:__',value=cogs_desc[0:len(cogs_desc)-1],inline=False)
             #Not In Use
