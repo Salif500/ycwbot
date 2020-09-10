@@ -1,1 +1,0 @@
-Python: Buzzfeed Functions(30),Python: Buzzfeed SelectAllThatApply(20),Python: Buzzfeed FileStorage(30),Python: Madlibs Sleeping(10),Python: Madlibs RandomStories(30),Python: Madlibs Classes(30),Python: RNG Loops(10),Python: RNG GuessingAlgorithm(40),Python: UserPassGenerator FileStorage(30),Python: UserPassGenerator PassGrader(10),HTML: TopThree InlineElements(20)

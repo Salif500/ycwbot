@@ -102,7 +102,7 @@ class Events(commands.Cog):
 
         
 
-    @commands.Cog.listener()
+    """@commands.Cog.listener()
     async def on_message(self, message):
         first_message = message
         global first_letter
@@ -139,7 +139,7 @@ class Events(commands.Cog):
                                     reply = None
                                     reply = await self.client.wait_for('message', timeout=60.0, check=lambda message: message.author == member)
                                     if(reply != None):
-                                        await first_message.channel.send("{}. Your question has been replied by {} who says, {}".format(first_message.author.display_name, reply.author.display_name, reply.content))
+                                        await first_message.channel.send("{}. Your question has been replied by {} who says, {}".format(first_message.author.display_name, reply.author.display_name, reply.content))"""
                                     
         
             
@@ -159,18 +159,9 @@ class Events(commands.Cog):
             except:
                 print('addrole error')
         else:
-            print('else')
             role = discord.utils.get(member.guild.roles, name='Waiting')
             await member.add_roles(role)      
-        with open('cf/cfscores.txt') as f:
-            lines = f.readlines()
-        for line in lines:
-            liner = line.split(' | ')
-            if(int(liner[1]) == member.id):
-                registered = True
-        if(registered == False):
-            with open('cf/cfscores.txt', 'a') as f:
-                f.write('{} | {} | 0 | 0 | \n'.format(member.display_name, member.id))
+        #Challengefest adding data should go here
 
 
         
