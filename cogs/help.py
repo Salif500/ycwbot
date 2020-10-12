@@ -3,7 +3,6 @@ However, you must put "bot.remove_command('help')" in your bot, and the command 
 Written by Jared Newsom (AKA Jared M.F.)!"""
 import discord
 from discord.ext import commands
-import inspect
 
 
 class Help(commands.Cog):
@@ -15,9 +14,9 @@ class Help(commands.Cog):
 
 
     @commands.command(pass_context=True)
-    async def help(self,ctx,cog='bobthebobthebob',page_num:int=None):
+    async def help(self,ctx,cog='____placeholder____',page_num:int=None):
         """Prints help message"""
-        if(cog == 'bobthebobthebob'): 
+        if(cog == '____placeholder____'): 
             """Cog listing.  What more?"""
             halp=discord.Embed(title='All Commands in this Bot',
                                description='Use `.help *category*` to find out more about them!',
