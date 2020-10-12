@@ -15,9 +15,9 @@ class Help(commands.Cog):
 
 
     @commands.command(pass_context=True)
-    async def help(self,ctx,*cog):
+    async def help(self,ctx,cog='bobthebobthebob',page_num:int=None):
         """Prints help message"""
-        if not cog: 
+        if(cog == 'bobthebobthebob'): 
             """Cog listing.  What more?"""
             halp=discord.Embed(title='All Commands in this Bot',
                                description='Use `.help *category*` to find out more about them!',
@@ -50,19 +50,23 @@ class Help(commands.Cog):
             await ctx.message.author.send('',embed=halp)
             
         else:
-            """Helps me remind you if you pass too many args."""
+            """Helps me remind you if you pass too many args.\"""
+            page_num_wrong = False
             if len(cog) > 1:
                 halp = discord.Embed(title='Error!',description='That is way too many categories!',color=discord.Color.red())
-                await ctx.message.author.send('',embed=halp)
-            else:
-                """Command listing within a cog."""
-                found = False
-                cog = (cog[0].capitalize(),)
-                for x in self.client.cogs:
-                    for y in cog:
-                        if x == y:
-                            halp=discord.Embed(title=cog[0]+' Commands',description=self.client.cogs[cog[0]].__doc__, color=discord.Color.blue())
-                            for c in self.client.get_cog(y).get_commands():
+                await ctx.message.author.send('',embed=halp)"""
+            """Command listing within a cog."""
+            found = False
+            cog = cog.capitalize()
+            for x in self.client.cogs:
+                if x == cog:
+                    halp=discord.Embed(title=cog+' Commands',description=self.client.cogs[cog].__doc__, color=discord.Color.blue())
+                    if len(self.client.get_cog(cog).get_commands()) > 5:
+                        counters = 0
+                        if(page_num == 1 or page_num == None):
+                            halp.set_footer(text='Page 1 of 2')
+                            for c in self.client.get_cog(cog).get_commands():
+                                counters += 1
                                 if not c.hidden:
                                     brackets_left = " <"
                                     brackets_right = ">"
@@ -77,11 +81,53 @@ class Help(commands.Cog):
                                     if not cog_command_aliases:
                                         cog_command_aliases = ["None"]
                                     halp.add_field(name=c.name,value=str(c.help) + "\nParameters:{}{}{}\nAliases: {}".format(brackets_left, ('> <'.join(cog_command_params)),brackets_right,(', '.join(cog_command_aliases))),inline=False)
-                            found = True
-                if not found:
-                    """Reminds you if that cog doesn't exist."""
-                    halp = discord.Embed(title='Error!',description='What even is "'+cog[0]+'"?',color=discord.Color.red())
-                await ctx.message.author.send('',embed=halp)
+                                if(counters == 5):
+                                    break
+                        elif(page_num == 2):
+                            halp.set_footer(text='Page 2 of 2')
+                            for c in self.client.get_cog(cog).get_commands():
+                                counters += 1
+                                if(counters > 5):
+                                    if not c.hidden:
+                                        brackets_left = " <"
+                                        brackets_right = ">"
+                                        cog_command = self.client.get_command(str(c))
+                                        cog_command_aliases = cog_command.aliases
+                                        cog_command_params_dict = cog_command.clean_params
+                                        cog_command_params = list(cog_command_params_dict)
+                                        if not cog_command_params:
+                                            cog_command_params = ["None"]
+                                            brackets_left = " "
+                                            brackets_right = ""
+                                        if not cog_command_aliases:
+                                            cog_command_aliases = ["None"]
+                                        halp.add_field(name=c.name,value=str(c.help) + "\nParameters:{}{}{}\nAliases: {}".format(brackets_left, ('> <'.join(cog_command_params)),brackets_right,(', '.join(cog_command_aliases))),inline=False)
+                        else:
+                            page_num_wrong = True
+                            await ctx.send('Ya Got the Page Number Wrong')
+
+
+                    else:
+                        for c in self.client.get_cog(cog).get_commands():
+                            if not c.hidden:
+                                brackets_left = " <"
+                                brackets_right = ">"
+                                cog_command = self.client.get_command(str(c))
+                                cog_command_aliases = cog_command.aliases
+                                cog_command_params_dict = cog_command.clean_params
+                                cog_command_params = list(cog_command_params_dict)
+                                if not cog_command_params:
+                                    cog_command_params = ["None"]
+                                    brackets_left = " "
+                                    brackets_right = ""
+                                if not cog_command_aliases:
+                                    cog_command_aliases = ["None"]
+                                halp.add_field(name=c.name,value=str(c.help) + "\nParameters:{}{}{}\nAliases: {}".format(brackets_left, ('> <'.join(cog_command_params)),brackets_right,(', '.join(cog_command_aliases))),inline=False)
+                    found = True
+            if not found:
+                """Reminds you if that cog doesn't exist."""
+                halp = discord.Embed(title='Error!',description='What even is "'+cog+'"?',color=discord.Color.red())
+            await ctx.message.author.send('',embed=halp)
         
 def setup(client):
     client.add_cog(Help(client))

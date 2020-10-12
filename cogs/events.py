@@ -11,37 +11,20 @@ class Events(commands.Cog):
         self.month = 0
         
 
-    def number_to_month(self):
-        """Converting a month number to a month name"""
-        months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-        self.month = months[int(self.month) - 1]
+
 
     @commands.Cog.listener()
     async def on_command_completion(self, ctx):
-        global month, pos
         user_id = ctx.author.id
         if(ctx.author.id != 708745902692630560):       
             message_copy = ctx.message.content
             message_author = ctx.author.display_name
-            
-            message_time_list = str(ctx.message.created_at).split(" ")
-            message_var = message_time_list[0]
-            message_time_list2 = message_var.split("-")
-            year = message_time_list2[0]
-            self.month = message_time_list2[1]
-            self.number_to_month()
-            day = message_time_list2[2]
-            if(day[-1] == 1):
-                day_suffix = "st"
-            elif(day[-1] == 2):
-                day_suffix = "nd"
-            elif(day[-1] == 3):
-                day_suffix = "rd"
+            if isinstance(ctx.message.channel, discord.DMChannel):
+                channel_name = 'a DM'
             else:
-                day_suffix = "th"
-            
+                channel_name = ctx.message.channel.name    
             channel = self.client.get_channel(721506781112696854)
-            await channel.send("{} command sent by {} at {} {}{}, {}".format(ctx.message.clean_content, message_author, self.month, day, day_suffix, year))
+            await channel.send("{} command sent by {} in {} channel".format(ctx.message.clean_content, message_author, channel_name))
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
@@ -62,6 +45,14 @@ class Events(commands.Cog):
             elif("You are missing at least one of" in str(error)):
                 roles = str(error).split(": ")
                 await ctx.send("You are not allowed to do this command. Only {} can use this".format(roles[1]))
+            elif('Converting to "int" failed for parameter "numofpeople".' in str(error)):
+                await ctx.send('You have put in a category in place of a number or you just put some random mumbo jumbo. If you want to put specify a category, you first have to put a number in front')
+            elif('Converting to "int" failed for parameter' in str(error)):
+                await ctx.send("That isn't a number.")
+            elif('Member' in str(error)):
+                if('not found' in str(error)):
+                    await ctx.send("That isn't a member, or that member isn't found")
+            
             else:
                 await ctx.send(error)
         else:
@@ -104,31 +95,36 @@ class Events(commands.Cog):
 
     """@commands.Cog.listener()
     async def on_message(self, message):
-        first_message = message
-        global first_letter
-        global second_letter
-        first_letter = None
-        second_letter = None
-        if(message.author.id != 708745902692630560):
-            filter_content = []
-            channel = message.channel
-            with open("settings/filter_content.txt") as f:
-                for line in f.readlines():
-                    filter_content.append(line)
-            for element in filter_content:
-                if(element in message.content):
-                    asterisks = []
-                    try:
-                        first_letter = element[0]
-                        second_letter = element[1]
-                    except:
-                        pass
-                    if(first_letter and second_letter != None):
-                        length = len(message.content)
-                        for i in range(1, length-2):
-                            asterisks.append("*")
-                        await channel.purge(limit=1)
-                        await channel.send("The word {}{}\{} is not allowed. Please ask an Admin if this is a mistake".format(first_letter, second_letter, (''.join(asterisks))))
+        if(message.content.startswith('https://cdn.discordapp.com/attachments')):
+            await message.delete()      
+            first_message = message
+            global first_letter
+            global second_letter
+            first_letter = None
+            second_letter = None
+            if(message.author.id != 708745902692630560):
+                filter_content = []
+                channel = message.channel
+                with open("settings/filter_content.txt") as f:
+                    for line in f.readlines():
+                        filter_content.append(line)
+                for element in filter_content:
+                    if(element in message.content):
+                        asterisks = []
+                        try:
+                            first_letter = element[0]
+                            second_letter = element[1]
+                        except:
+                            pass
+                        if(first_letter and second_letter != None):
+                            length = len(message.content)
+                            for i in range(1, length-2):
+                                asterisks.append("*")
+                            await channel.purge(limit=1)
+                            if(element == 'tenor.com' or element == 'giphy.com'):
+                                await channel.send("{}, We do not allow tenor/giphy links due to an influx of spamming with these gifs.".format(message.author.mention))
+                            else:
+                                await channel.send("The word {}{}\{} is not allowed. Please ask an Admin if this is a mistake".format(first_letter, second_letter, (''.join(asterisks))))
             if(message.content.startswith("question: ")):
                 for guild in self.client.guilds:
                     for role in guild.roles:
@@ -150,8 +146,8 @@ class Events(commands.Cog):
     async def on_member_join(self,member):
         registered = False
         channel = self.client.get_channel(746863674324680815)
-        await member.send('Welcome to YCW! You have just received the student role for joining the server! GLHF! Please look at this document for our online workshop procedures: https://docs.google.com/document/d/1BnzQFY0t5ezTR8af6WL-kB44q6k4CLHh8_rbLCLCH3A/edit')
-        await channel.send("Hello {}, welcome to YCW! How did you hear about us? If you want a tour of our discord server, please watch https://youtu.be/v1M0Ruj_ghE. Feel free to explore our discord server and also check out https://ycwalameda.weebly.com".format(member.mention))
+        await member.send('Welcome to YCW! You have just received the waiting room role for joining the server! GLHF! Please look at this document for our online workshop procedures: https://docs.google.com/document/d/1BnzQFY0t5ezTR8af6WL-kB44q6k4CLHh8_rbLCLCH3A/edit')
+        await channel.send("Hello {}, welcome to YCW! How did you hear about us? If you want a tour of our discord server, please watch https://www.youtube.com/watch?v=TjndvG0hS_A. Feel free to explore our discord server and also check out https://ycwalameda.weebly.com".format(member.mention))
         if(member.id == 308027015863336960):
             try:
                 role = discord.utils.get(member.guild.roles, name='Waiting')
@@ -161,7 +157,6 @@ class Events(commands.Cog):
         else:
             role = discord.utils.get(member.guild.roles, name='Waiting')
             await member.add_roles(role)      
-        #Challengefest adding data should go here
 
 
         
@@ -190,7 +185,7 @@ class Events(commands.Cog):
         
     @commands.Cog.listener()
     async def on_ready(self):
-        await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="some YCW vids"))
+        await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="some YCW vids. Subscribe to YCW!"))
         print("Bot is ready")
 
          

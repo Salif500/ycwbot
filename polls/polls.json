@@ -1,0 +1,50 @@
+{
+      "308027015863336960": {
+            "name": "Saif Jeelani",
+            "current_polls": {
+                  "test_poll": {
+                        "id": 762544016788684810,
+                        "channel_id": 708781411699654729
+                  },
+                  "akhil_or_abhi": {
+                        "id": 762815771818328064,
+                        "channel_id": 648705311963611147
+                  }
+            }
+      },
+      "308023696520511488": {
+            "name": "Kaif J.",
+            "current_polls": {
+                  "ycwamongus": {
+                        "id": 762352670903238676,
+                        "channel_id": 648705311963611147
+                  },
+                  "challengefestparticipation": {
+                        "id": 765007192960139274,
+                        "channel_id": 648705311963611147
+                  }
+            }
+      },
+      "688446572992004215": {
+            "name": "Omar",
+            "current_polls": {
+                  "finals_of_nba": {
+                        "id": 762535040332070982,
+                        "channel_id": 753840673173536778
+                  },
+                  "omar": {
+                        "id": 762737703938293760,
+                        "channel_id": 753840673173536778
+                  }
+            }
+      },
+      "551576398133723146": {
+            "name": "Akhil Mummidi",
+            "current_polls": {
+                  "dolphin_or_turtle": {
+                        "id": 762816146407424021,
+                        "channel_id": 648705311963611147
+                  }
+            }
+      }
+}

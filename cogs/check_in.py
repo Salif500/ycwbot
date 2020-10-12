@@ -68,11 +68,10 @@ class Checkin(commands.Cog):
         global total
         with open("total.txt") as file_object:
             lines = file_object.readlines()
-            for line in lines:
-                try:
-                    await ctx.send("\n" + line)
-                except:
-                    print("Empty message")
+        string = ''.join(lines)
+        embed = discord.Embed(title='Attendance', description='Checkin command attendance', color=discord.Color.blurple())
+        embed.add_field(name='Dates:', value=string, inline=False)
+        await ctx.send(embed=embed)
                 
 def setup(client):
     client.add_cog(Checkin(client))

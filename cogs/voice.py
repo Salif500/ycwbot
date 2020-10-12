@@ -19,9 +19,9 @@ class Voice(commands.Cog):
                     except:
                         pass
 
-    @commands.command()
+    @commands.command(aliases=['move_students', 'startClass'])
     @commands.has_any_role("Admin", "Moderator")
-    async def move_students(self, ctx):
+    async def start_class(self, ctx):
         """Moves all students to designated voice channels(ADMINS ONLY)(DEPRECATED)"""
         await self.client.wait_until_ready()
         moved = False

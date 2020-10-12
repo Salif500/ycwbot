@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-
+import json
 class Waiting(commands.Cog):
     """Commands for handling Waiting Room(ADMIN ONLY)"""
 
@@ -11,24 +11,39 @@ class Waiting(commands.Cog):
     @commands.has_any_role("Admin", "Moderator")
     async def accept_all(self, ctx):
         """Accepts ALL members in waiting room(ADMINS ONLY)"""
+        fin = open('cf/cfscores.json', encoding='utf8')
+        scores = json.load(fin)
+        fin.close()
+        for student in self.client.guilds[0].get_role(746862974295343216).members:
+            scores[student.id] = {'name' : f'{student.display_name}', 'current_points' : 0, 'total_points' : 0, 'QOTD' : 0, 'completed_challenges' : []}      
+        f = open('cf/cfscores.json', 'w', encoding='utf8')
+        json.dump(scores, f, indent=6)
+        f.close()    
         for role in self.client.guilds[0].roles:
             if(role.name.upper() == "WAITING"):
                 roles = role.members
                 for member in roles:
-                    student = self.client.guilds[0].get_role(665958098627985450)
+                    student_role = self.client.guilds[0].get_role(665958098627985450)
                     waiting = self.client.guilds[0].get_role(746862974295343216)
                     await member.remove_roles(waiting)
-                    await member.add_roles(student)
+                    await member.add_roles(student_role)
                 break
 
     @commands.command(pass_context=True)
     @commands.has_any_role("Admin", "Moderator")
-    async def accept(self, ctx, member: discord.Member):
+    async def accept(self, ctx, student: discord.Member):
         """Accepts a CERTAIN member in waiting room(ADMINS ONLY)"""
-        student = self.client.guilds[0].get_role(665958098627985450)
+        fin = open('cf/cfscores.json', encoding='utf8')
+        scores = json.load(fin)
+        fin.close()
+        scores[student.id] = {'name' : f'{student.display_name}', 'current_points' : 0, 'total_points' : 0, 'QOTD' : 0, 'completed_challenges' : []}
+        f = open('cf/cfscores.json', 'w', encoding='utf8')
+        json.dump(scores, f, indent=6)
+        f.close()
+        student_role = self.client.guilds[0].get_role(665958098627985450)
         waiting = self.client.guilds[0].get_role(746862974295343216)
-        await member.remove_roles(waiting)
-        await member.add_roles(student)
+        await student.remove_roles(waiting)
+        await student.add_roles(student_role)
                 
 def setup(client):
     client.add_cog(Waiting(client))
