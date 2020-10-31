@@ -8,9 +8,9 @@
       },
       "688446572992004215": {
             "name": "Omar",
-            "current_points": 15,
-            "total_points": 155,
-            "QOTD": 18,
+            "current_points": 20,
+            "total_points": 160,
+            "QOTD": 20,
             "completed_challenges": []
       },
       "552278007335878666": {
@@ -36,10 +36,12 @@
       },
       "749388759694442547": {
             "name": "Ekam Dhot",
-            "current_points": 10,
-            "total_points": 5,
-            "QOTD": 3,
-            "completed_challenges": []
+            "current_points": 105,
+            "total_points": 100,
+            "QOTD": 4,
+            "completed_challenges": [
+                  "Html: VerticalNavbar"
+            ]
       },
       "698647541872590861": {
             "name": "Haroon",
@@ -71,10 +73,13 @@
       },
       "708133621449359441": {
             "name": "Arsalan",
-            "current_points": 15,
-            "total_points": 40,
-            "QOTD": 5,
-            "completed_challenges": []
+            "current_points": 200,
+            "total_points": 225,
+            "QOTD": 9,
+            "completed_challenges": [
+                  "Html: VerticalNavbar",
+                  "Html: InlineBlock"
+            ]
       },
       "726143801034276876": {
             "name": "Niral",
@@ -106,24 +111,27 @@
       },
       "551576398133723146": {
             "name": "Akhil Mummidi",
-            "current_points": 15,
-            "total_points": 95,
-            "QOTD": 14,
+            "current_points": 30,
+            "total_points": 110,
+            "QOTD": 16,
             "completed_challenges": []
       },
       "614289245905092608": {
-            "name": "Imaad Adeel",
-            "current_points": 0,
-            "total_points": 10,
-            "QOTD": 1,
+            "name": "Imaad",
+            "current_points": 5,
+            "total_points": 15,
+            "QOTD": 2,
             "completed_challenges": []
       },
       "711228269575274516": {
             "name": "Abhi",
-            "current_points": 15,
-            "total_points": 140,
-            "QOTD": 21,
-            "completed_challenges": []
+            "current_points": 155,
+            "total_points": 280,
+            "QOTD": 24,
+            "completed_challenges": [
+                  "Python: SleepingMadlibs",
+                  "Html: VerticalNavbar"
+            ]
       },
       "696091928294326313": {
             "name": "Vaidehi Akbari",
@@ -190,9 +198,9 @@
       },
       "281240663968710666": {
             "name": "Fayez",
-            "current_points": 10,
-            "total_points": 0,
-            "QOTD": 2,
+            "current_points": 15,
+            "total_points": 5,
+            "QOTD": 3,
             "completed_challenges": []
       },
       "553001086072651797": {
@@ -218,23 +226,25 @@
       },
       "712046685626433547": {
             "name": "Mohammed",
-            "current_points": 20,
-            "total_points": 55,
-            "QOTD": 6,
-            "completed_challenges": []
+            "current_points": 65,
+            "total_points": 100,
+            "QOTD": 9,
+            "completed_challenges": [
+                  "Python: SleepingMadlibs"
+            ]
       },
       "651965542382436353": {
-            "name": "Aman",
-            "current_points": 0,
-            "total_points": 55,
-            "QOTD": 7,
+            "name": "Aman B.",
+            "current_points": 5,
+            "total_points": 60,
+            "QOTD": 8,
             "completed_challenges": []
       },
       "576190978369781770": {
             "name": "Vivaan V.",
-            "current_points": 0,
-            "total_points": 0,
-            "QOTD": 0,
+            "current_points": 35,
+            "total_points": 35,
+            "QOTD": 5,
             "completed_challenges": []
       },
       "443590930369609728": {
@@ -253,10 +263,12 @@
       },
       "756991629558284379": {
             "name": "Sristi",
-            "current_points": 10,
-            "total_points": 15,
+            "current_points": 40,
+            "total_points": 45,
             "QOTD": 3,
-            "completed_challenges": []
+            "completed_challenges": [
+                  "Python: SleepingMadlibs"
+            ]
       },
       "687101026028748829": {
             "name": "Azlan",
@@ -266,9 +278,9 @@
             "completed_challenges": []
       },
       "308027015863336960": {
-            "name": "\u017f \u025f\u1d09\u0250S,",
-            "current_points": 0,
-            "total_points": 0,
+            "name": "Saif J.",
+            "current_points": -1,
+            "total_points": -1,
             "QOTD": 0,
             "completed_challenges": []
       },
@@ -295,6 +307,41 @@
       },
       "761049256370503712": {
             "name": "ShanaD",
+            "current_points": 0,
+            "total_points": 0,
+            "QOTD": 0,
+            "completed_challenges": []
+      },
+      "284843072305496065": {
+            "name": "Shreyas L",
+            "current_points": 0,
+            "total_points": 0,
+            "QOTD": 0,
+            "completed_challenges": []
+      },
+      "761049324242206741": {
+            "name": "Krish D",
+            "current_points": 10,
+            "total_points": 10,
+            "QOTD": 2,
+            "completed_challenges": []
+      },
+      "760696948394164306": {
+            "name": "Rohan Nihalani",
+            "current_points": 0,
+            "total_points": 0,
+            "QOTD": 0,
+            "completed_challenges": []
+      },
+      "743250979146825788": {
+            "name": "Abhidabest",
+            "current_points": 0,
+            "total_points": 0,
+            "QOTD": 0,
+            "completed_challenges": []
+      },
+      "769603076667473930": {
+            "name": "Mohammed2",
             "current_points": 0,
             "total_points": 0,
             "QOTD": 0,
