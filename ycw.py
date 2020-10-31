@@ -1,8 +1,14 @@
-import discord
+import discord, os, keep_alive, json
 from discord.ext import commands
-import os
-import logging
 
+
+
+keep_alive.keep_alive()
+
+'''
+1.)Find each instance of opening dynamic folder in CF and Poll
+	a.)Replace it with dynamic/{}_{} and add .format(ctx.message.guild.name)
+'''
 
 intents = discord.Intents.all()
 client = commands.Bot(intents=intents, command_prefix = ".")
@@ -14,13 +20,35 @@ handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w'
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)"""
 
-@client.command()
-async def add_suggestion(ctx, *, suggestion):
-    """Use this to suggest a command"""
-    with open("suggestions.txt", "a") as f:
-        f.write("{} | {}\n".format(ctx.author.display_name, suggestion))
-    user = client.get_user(308027015863336960)
-    await user.send('Someone has added a suggestion')
+
+
+
+@client.event
+async def on_guild_join(guild):
+  """Triggers when the bot joins another guild"""
+  print('Bot is joined')
+  print(guild.name)
+  parent_dir = os.getcwd()
+  path = os.path.join('{}/dynamic'.format(parent_dir), str(guild.id))
+  os.mkdir(path)
+  os.mkdir(os.path.join(path, 'cf'))
+  os.mkdir(os.path.join(path, 'polls')) 
+  f = open(f'dynamic/{str(guild.id)}/cf/cfscores.json', 'w')
+  f.write('{}')
+  f.close()
+  f = open(f'dynamic/{str(guild.id)}/cf/cfchal.json', 'w')
+  f.write('{}')
+  f.close()
+  f = open(f'dynamic/{str(guild.id)}/polls/polls.json', 'w')
+  f.write('{}')
+  f.close()
+  fin = open('name.json')
+  names = json.load(fin)
+  fin.close()
+  fout = open('name.json', 'w')
+  names[guild.name] = guild.id
+  json.dump(names, fout, indent=6)
+  fout.close()
 
 @client.command()
 @commands.has_any_role("Admin", "Moderator")
@@ -37,10 +65,21 @@ async def unload(ctx, extension):
     await ctx.send("Cog has been unloaded!")
 
 @client.command()
+async def clr_rct(ctx, link):
+  link_li = link.split('/')
+  channel = await client.fetch_channel(int(link_li[5]))
+  message = await channel.fetch_message(link_li[6])
+  for reaction in message.reactions:
+    if(str(reaction) == '\U0001f44d'):
+      await reaction.clear()
+
+'''
+@client.command()
 @commands.has_any_role("Admin", "Moderator")
 async def check_logs(ctx):
     with open('discord.log', 'rb') as fp:
         await ctx.send('File:', file=discord.File(fp, 'discord_log.log'))
+'''
 
 """@client.command()
 @commands.has_any_role("Moderator")
@@ -49,38 +88,16 @@ async def error_handling(ctx, switch):
     if(switch.lower() == "on" or switch.lower() == "off"):
         with open('settings/error_handling.txt', 'w') as f:
             f.write(switch.lower())"""
+
+@client.command()
+@commands.has_any_role("Moderator")
+async def give_me_admin(ctx):
+  await ctx.author.remove_roles(ctx.message.guild.get_role(648703163242905600))
             
-@client.command()
-@commands.has_any_role('Moderator')
-async def person_by_id(ctx, num:int):
-    """Gets a person by id"""
-    await ctx.send(client.get_user(num).display_name)
 
-@client.command()
-@commands.has_any_role('Moderator')
-async def message_by_id(ctx, num:int, specify=None):
-    message = await ctx.channel.fetch_message(num)
-    if(specify == None):
-        await ctx.send(message.content)
-    elif(specify == 'timestamp'):
-        await ctx.send(message.created_at)
-    elif(specify == 'channel'):
-        await ctx.send(message.channel)
-
-@client.command()
-async def owner(ctx):
-    await ctx.send('{}'.format(client.guilds[0].owner.display_name)
-)        
-
-@client.command()
-@commands.has_any_role('Moderator', 'Admin', 'Tutor')
-async def hi(ctx):
-    emoji = discord.utils.get(client.guilds[0].emojis, name='saif')
-    await emoji.delete()
-    await ctx.send('hi')
     
 for filename in os.listdir("./cogs"):
-    if(filename.endswith(".py")):
-        client.load_extension("cogs.{}".format(filename[:-3]))
-f = open('C:/Users/saifj/AppData/Local/Programs/Python/Python37/projects/saif projects/discord_bots/ycwbot_token.txt')
+  if(filename.endswith(".py")):
+    client.load_extension("cogs.{}".format(filename[:-3]))
+f = open('ycwbot_token.txt')
 client.run(f"{f.readline()}")

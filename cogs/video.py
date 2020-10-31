@@ -63,14 +63,24 @@ class Video(commands.Cog):
                 await user.send('', embed=embed1)
             except:
                 await ctx.send("That unit isn't there yet, or you misspelled it")
+        elif(group.lower() == "scratch"):
+            try:
+                dictionary = units_html["unit{}".format(unit_num)]
+                embed1 = discord.Embed(title="Unit {} Videos".format(unit_num), description="All videos in unit {}, the list of videos might be outdated.".format(unit_num), color=discord.Color.red())
+                for key, value1 in dictionary.items():
+                    embed1.add_field(name=key, value=value1, inline=False)
+                await user.send('', embed=embed1)
+            except:
+                await ctx.send("That unit isn't there yet, or you misspelled it")
         else:
             await ctx.send("Sorry that group isn't there.")
 
     @commands.command()
     @commands.has_any_role("Admin", "Moderator")
-    async def add_vid(self, ctx, group, unit_num, link, *, video):
+    async def add_vid(self, ctx, group, unit_num, link, *, video_name):
         """Add a video to a unit, or create a unit if unit listed doesn't exist(ADMINS ONLY)"""
         global existing
+        video = video_name
         existing = False
         if(group.lower() == "python"):
             for filename in os.listdir("./units_py"):
@@ -87,6 +97,19 @@ class Video(commands.Cog):
             self.update_files_py()
         elif(group.lower() == "html"):
             for filename in os.listdir("./units_html"):
+                if("unit{}.txt".format(unit_num) == str(filename)):
+                    existing = True
+            if existing:
+                with open("units_html/unit{}.txt".format(unit_num), "a") as f:
+                    f.write("{} : {}\n".format(video, link))   
+            elif not existing:
+                print('Not existing')
+                with open("units_html/unit{}.txt".format(unit_num), "w") as f:
+                    f.write("{} : {}\n".format(video, link))
+            await ctx.send("A new video has been added")
+            self.update_files_py()
+        elif(group.lower() == "scratch"):
+            for filename in os.listdir("./units_scratch"):
                 if("unit{}.txt".format(unit_num) == str(filename)):
                     existing = True
             if existing:
